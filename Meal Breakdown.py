@@ -18,7 +18,7 @@ def set_workbook():
 
 def weight():
     global wt
-    print('Assuming a weight of %s... [enter correct weight if incorrect]' % (wt))
+    print('Assuming a weight of {}... [enter correct weight if incorrect]'.format(wt)
     if input().isdigit():
         wt = int(input())
         food['B1'] = wt
@@ -33,6 +33,7 @@ def change_weight(): #Obsolete
     return
 
 def add_meal():
+    '''Allows user to add a meal into excel'''
     global x, refs_this_session
     x += 1
     if len(refs_this_session) > 0:
@@ -87,7 +88,7 @@ def more():
     else:
         add_meal()
 
-def check_duplicates(name, dup=False):
+def check_duplicates(name, dup=False): #Could make this into a set instead 
     for i in range(4, x+1):
         if name == food['D'+str(i)].value:
             print('{} already exists'.format(name))
@@ -118,7 +119,7 @@ def set_goals():
     for i in range(7, 10): #Everything else
         food[get_column_letter(i)+'1'] = '{} g'.format(str(wt*gNum[i-7]))
     return
-    
+
 
 def save_and_update():
     wb.save('Meal Breakdown.xlsx')
@@ -126,7 +127,7 @@ def save_and_update():
     print('Opening...')
     time.sleep(2)
     subprocess.call([opener, ('Meal Breakdown.xlsx')])
-    
+
 #Main
 refs_this_session = []
 titles = ['Meal Type', 'Primary Food Type', 'Second Food Type', 'Name', 'Unit', 'Calories', 'Protein (g)', 'Carbs (g)', 'Fat (g)', 'Favorites', 'Reference']
