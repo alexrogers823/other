@@ -34,8 +34,8 @@ def change_weight(): #Obsolete
 
 def add_meal():
     '''Allows user to add a meal into excel'''
-    global x, refs_this_session
-    x += 1
+    global bottom, refs_this_session
+    bottom += 1
     if len(refs_this_session) > 0:
         print('Add next one: (? to bring up order)')
     if len(refs_this_session) == 0: #or input() == '?':
@@ -88,8 +88,8 @@ def more():
     else:
         add_meal()
 
-def check_duplicates(name, dup=False): #Could make this into a set instead 
-    for i in range(4, x+1):
+def check_duplicates(name, dup=False): #Could make this into a set instead
+    for i in range(4, bottom+1):
         if name == food['D'+str(i)].value:
             print('{} already exists'.format(name))
             dup = True
@@ -100,13 +100,13 @@ def check_duplicates(name, dup=False): #Could make this into a set instead
 
 def categorize_meal_type(search):
     cate = ['Breakfast', 'Lunch', 'Dinner', 'Snack', 'Dessert']
-    for i in range(4, x+1):
+    for i in range(4, bottom+1):
         if search == food['A'+str(i)].value:
             break
         else:
             continue
     r = i
-    shift.Shift(food, food.max_column, x, r).down()
+    shift.Shift(food, food.max_column, bottom, r).down()
     return r
 
 def set_goals():
@@ -134,7 +134,7 @@ titles = ['Meal Type', 'Primary Food Type', 'Second Food Type', 'Name', 'Unit', 
 wb = px.load_workbook('Meal Breakdown.xlsx')
 food = set_workbook()
 wt = food['B1'].value
-x = food.max_row
+bottom = food.max_row
 weight()
 set_goals()
 save_and_update()
