@@ -18,7 +18,7 @@ def set_workbook():
 
 def weight():
     global wt
-    print('Assuming a weight of {}... [enter correct weight if incorrect]'.format(wt)
+    print('Assuming a weight of {}... [enter correct weight if incorrect]'.format(wt))
     if input().isdigit():
         wt = int(input())
         food['B1'] = wt
@@ -46,8 +46,8 @@ def add_meal():
     while True:
         try:
             meal = input().title().split(', ') #separate meal so each part goes in the right place on excel sheet
-            dup = check_duplicates(meal[3])
-            if dup == True:
+            originals = check_duplicates()
+            if meals[3] in originals:
                 raise Exception
         except IndexError:
             print('Add ALL of the following:')
@@ -88,15 +88,22 @@ def more():
     else:
         add_meal()
 
-def check_duplicates(name, dup=False): #Could make this into a set instead
+# def check_duplicates(name, dup=False): #Could make this into a set instead
+#     for i in range(4, bottom+1):
+#         if name == food['D'+str(i)].value:
+#             print('{} already exists'.format(name))
+#             dup = True
+#             break
+#         else:
+#             continue
+#     return dup
+
+def check_duplicates(): #The set version
+    originals = set([])
     for i in range(4, bottom+1):
-        if name == food['D'+str(i)].value:
-            print('{} already exists'.format(name))
-            dup = True
-            break
-        else:
-            continue
-    return dup
+        originals.add(food['D'+str(i)])
+
+    return originals
 
 def categorize_meal_type(search):
     cate = ['Breakfast', 'Lunch', 'Dinner', 'Snack', 'Dessert']
