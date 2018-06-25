@@ -101,7 +101,7 @@ def more():
 def check_duplicates(): #The set version
     originals = set([])
     for i in range(4, bottom+1):
-        originals.add(food['D'+str(i)])
+        originals.add(food['D'+str(i)].value)
 
     return originals
 
