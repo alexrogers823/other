@@ -32,6 +32,11 @@ def change_weight(): #Obsolete
     food['B1'] = wt
     return
 
+def instructions():
+    print('Add the following, separating each by a comma:')
+    for i in range(len(titles)-2):
+        print(titles[i], end=', ')
+
 def add_meal():
     '''Allows user to add a meal into excel'''
     global bottom, refs_this_session
@@ -39,13 +44,14 @@ def add_meal():
     if len(refs_this_session) > 0:
         print('Add next one: (? to bring up order)')
     if len(refs_this_session) == 0: #or input() == '?':
-        print('Add the following, separating each by a comma:')
-        for i in range(len(titles)-2):
-            print(titles[i], end=', ')
+        instructions()
         print()
     while True:
         try:
             meal = input().title().split(', ') #separate meal so each part goes in the right place on excel sheet
+            if meal == '?':
+                instructions()
+                continue
             originals = check_duplicates()
             if meals[3] in originals:
                 raise Exception
@@ -55,7 +61,7 @@ def add_meal():
                 print(titles[i], end=', ')
             print()
         except Exception:
-            print('Try another title')
+            print('Try another title. {} already exists'.format(meal[3]))
             time.sleep(1)
         else:
             break
