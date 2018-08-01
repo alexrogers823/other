@@ -481,6 +481,12 @@ def orderOfStatements():
     categoryTotal()
     moreReceipts()
 
+def manual_correction(month):
+    cell = input("Which cell to change?\n")
+    correction = input("Enter correction here: ")
+    month[cell].value = correction
+    return
+
 def goals():
     '''Lets user set a month goal for an expense'''
     loop = True
@@ -596,6 +602,9 @@ if addr.lower().startswith('goal'):
     changeGoals = goals()
 if addr.lower().startswith('correct'): # or ideal.startswith('n'):
     shortExit()
+if addr.lower().startswith('manual'):
+    manual_correction()
+    save_and_update()
 elif addr.lower().startswith('y'): #or ideal.startswith('y'):
     receipts == True
     print()
