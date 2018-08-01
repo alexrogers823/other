@@ -389,7 +389,8 @@ def cumulativePrice():
                     break
             return
         else:
-            month['E' + str(x)] = '=D' + str(x) + '+E' + str((x) - 1)
+#            month['E'+str(x)] = '=D' + str(x) + '+E' + str((x) - 1)
+            month['E'+str(x)] = '=IFERROR(D{0}+E{1},D{0})'.format(str(x), str(x-1))
             return
 
 
@@ -476,6 +477,12 @@ def orderOfStatements():
         addExpense()
         cumulativePrice()
         categoryTotal()
+
+def manual_correction(month):
+    cell = input("Which cell to change?\n")
+    correction = input("Enter correction here: ")
+    month[cell].value = correction
+    return
 
 def presetGoals():
     g = []
@@ -605,6 +612,9 @@ def routine():
     global receipts
     print('Good %s, Alex. Do you have receipts to add? [Y or N]' % (hour))
     addr = input()
+    if addr.lower().startswith('manual'):
+        manual_correction(month)
+        save_and_update()
     if addr.lower().startswith('goal'):
         changeGoals = goals()
     if addr.lower().startswith('correct'): # or changeGoals.startswith('n'):
