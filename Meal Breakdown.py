@@ -123,14 +123,16 @@ def categorize_meal_type(search):
     return r
 
 def set_goals():
-    cal = 15
-    protein = 1
-    carbs = 2
-    fat = 0.4
     gNum = [cal, protein, carbs, fat]
-    food['F1'] = '{} cal'.format(str(wt*gNum[0])) #Calories
+    macros = {
+        cal: wt*15,
+        protein: wt*1,
+        carbs: wt*2,
+        fat: wt*0.4
+    }
+    food['F1'] = '{cal} cal'.format(macros) #Calories
     for i in range(7, 10): #Everything else
-        food[get_column_letter(i)+'1'] = '{} g'.format(str(wt*gNum[i-7]))
+        food[get_column_letter(i)+'1'] = '{} g'.format(gNum[i-6])
     return
 
 
